@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component'
 import { BandEditComponent } from './components/band-edit/band-edit.component';
 import { AdminhomepageComponent } from './components/adminhomepage/adminhomepage.component';
 import { QuestionsAddComponent } from './components/questions-add/questions-add.component';
+import { QuestionsAddBulkComponent } from './components/question-add-bulk/questions-add-bulk.component';
 import { TestConfigAddComponent } from './components/test-config-add/test-config-add.component';
 import { TestConfigEditComponent } from './components/test-config-edit/test-config-edit.component'
 import { DeactivateGuard } from './service/canDeactivate.candCreate';
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'login-component', component: LoginComponent },
   { path: 'adminhomepage', component: AdminhomepageComponent },
   { path: 'manage-questionbank', component:QuestionsAddComponent},
+  { path: 'manage-questionbank-bulk', component:QuestionsAddBulkComponent},
   { path: 'testconfig-add', component:TestConfigAddComponent},
   { path: 'testconfig-edit/:id', component:TestConfigEditComponent},
   { path: 'jrss-create', component: JrssCreateComponent },
