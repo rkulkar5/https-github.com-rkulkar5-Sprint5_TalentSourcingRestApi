@@ -312,4 +312,12 @@ deleteJrss(id): Observable<any> {
 }
 //End of JRSS:
 
+// Update technology stream by ID
+ updateTechStream(id, data): Observable<any> {
+  let url = `${this.baseJrssUri}/updateTechStream/${id}`;
+  return this.http.put(url, data, { headers: this.headers }).pipe(
+    catchError(this.errorMgmt)
+  )
+}
+
 }

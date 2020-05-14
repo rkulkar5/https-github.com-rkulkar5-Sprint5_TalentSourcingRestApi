@@ -18,6 +18,7 @@ import { TestConfigEditComponent } from './components/test-config-edit/test-conf
 import { DeactivateGuard } from './service/canDeactivate.candCreate';
 import { JrssCreateComponent } from './components/jrss-create/jrss-create.component';
 import { ViewTestresultsComponent } from './components/view-testresults/view-testresults.component';
+import { StreamCreateComponent } from './components/stream-create/stream-create.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login-component' },
@@ -36,7 +37,8 @@ const routes: Routes = [
   { path: 'testconfig-add', component:TestConfigAddComponent},
   { path: 'testconfig-edit/:id', component:TestConfigEditComponent},
   { path: 'jrss-create', component: JrssCreateComponent },
-  {path: 'view-testresults', component:ViewTestresultsComponent}
+  {path: 'view-testresults', component:ViewTestresultsComponent},
+  { path: 'stream-create', component: StreamCreateComponent }
 ];
 
 @NgModule({

@@ -44,4 +44,22 @@ jrssRoute.route('/deleteJrss/:id').delete((req, res, next) => {
     }
   })
 })
+
+
+// Update Technology Stream for a Jrss
+jrssRoute.route('/updateTechStream/:id').put((req, res, next) => {
+ // console.log('req.params.id === '+req.params.id);
+  JRSS.findByIdAndUpdate(req.params.id, {
+    $set: req.body
+  }, (error, data) => {
+    if (error) {
+      console.log(error);
+      return next(error);
+    } else {
+      res.json(data)
+      console.log('Data updated successfully, data = '+data)
+      console.log('Data updated successfully')
+    }
+  })
+})
 module.exports = jrssRoute;

@@ -24,7 +24,8 @@ import { QuestionsAddComponent } from './components/questions-add/questions-add.
 import { TestConfigAddComponent } from './components/test-config-add/test-config-add.component';
 import { TestConfigEditComponent } from './components/test-config-edit/test-config-edit.component';
 import { JrssCreateComponent } from './components/jrss-create/jrss-create.component';
-import { ViewTestresultsComponent } from './components/view-testresults/view-testresults.component'
+import { ViewTestresultsComponent } from './components/view-testresults/view-testresults.component';
+import { StreamCreateComponent } from './components/stream-create/stream-create.component'
 export let browserRefresh = false;
 
 @NgModule({
@@ -45,7 +46,8 @@ export let browserRefresh = false;
     TestConfigAddComponent,
     TestConfigEditComponent,
     JrssCreateComponent,
-    ViewTestresultsComponent
+    ViewTestresultsComponent,
+    StreamCreateComponent
     ],
   imports: [
     BrowserModule,
