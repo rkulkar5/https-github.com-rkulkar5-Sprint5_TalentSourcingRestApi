@@ -88,6 +88,7 @@ export class StreamCreateComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.duplicateTechStream = false;
     this.readJrssDocId();
     if (!this.streamCreateForm.valid) {
       return false;

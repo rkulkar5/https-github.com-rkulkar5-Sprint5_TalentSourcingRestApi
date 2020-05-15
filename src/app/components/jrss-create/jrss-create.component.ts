@@ -10,6 +10,8 @@ import { browserRefresh } from '../../app.component';
   styleUrls: ['./jrss-create.component.css']
 })
 export class JrssCreateComponent implements OnInit {
+  error = '';
+  public duplicateJrss : boolean;
   public browserRefresh: boolean;
   submitted = false;
   jrssForm: FormGroup;
@@ -68,11 +70,23 @@ export class JrssCreateComponent implements OnInit {
       )
     }
   }
+
+  checkDuplicateJrss(){
+    for (var jrss of this.Jrss){
+      if(jrss.jrss.toLowerCase() == this.jrssForm.value.jrss.toLowerCase()){
+        this.duplicateJrss = true;
+      }
+    }
+  }	
     onSubmit() {
         this.submitted = true;
+        this.duplicateJrss = false;
+        this.checkDuplicateJrss();
         if (!this.jrssForm.valid) {
           return false;
-        } else {
+        } else if(this.duplicateJrss){
+          this.error = 'This entry is already existing';
+        } else{
           this.apiService.createJrss(this.jrssForm.value).subscribe(
             (res) => {
               console.log('JRSS successfully saved!')
@@ -83,5 +97,4 @@ export class JrssCreateComponent implements OnInit {
             });
         }
       }
-
 }

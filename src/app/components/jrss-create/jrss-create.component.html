@@ -34,6 +34,8 @@
           <div class="form-group" class="text-center" style="width: 100px">
             <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
           </div>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+      &nbsp;&nbsp;&nbsp;
         </form>
       </div>
     </div><!-- form add jrss -->
