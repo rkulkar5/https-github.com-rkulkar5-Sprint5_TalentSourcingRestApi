@@ -38,7 +38,7 @@
             <div class="col-sm-8">
               <input class="form-control" type="text" formControlName="technologyStream" id="inputTechnologyStream" [ngClass]="{ 'is-invalid': submitted && myForm.technologyStream.errors }" maxlength="50" minlength="1">
               <div *ngIf="submitted && myForm.technologyStream.errors" class="invalid-feedback">
-                <div *ngIf="myForm.technologyStream.errors.required">Tech Stream is required</div>
+                <div *ngIf="myForm.technologyStream.errors.required">Technology Stream is required</div>
                 <div *ngIf="myForm.technologyStream.errors.pattern">Enter a valid Tech Stream</div>
               </div>
             </div>
@@ -47,6 +47,8 @@
           <div class="form-group" class="text-center" style="width: 100px">
             <button class="btn btn-success btn-lg btn-block" type="submit">Save</button>
           </div>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+      &nbsp;&nbsp;&nbsp;
         </form>
       </div>
     </div>

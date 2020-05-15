@@ -11,18 +11,23 @@ import { browserRefresh } from '../../app.component';
   styleUrls: ['./stream-create.component.css']
 })
 export class StreamCreateComponent implements OnInit {
+  public duplicateTechStream : boolean;
+  error = '';
   public browserRefresh: boolean;
   streamCreateForm: FormGroup;
   JRSS:any = [];
   userName: String = "admin";
   submitted = false;
   optionsArray:Array<Object>=[];
+  jrssDocId: String = "";
+  currentJrssArray:any = [];
+  techStreamArray:any = [];
   constructor(
     public fb: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
     private apiService: ApiService,
-    
+
   ) { 
 
     this.mainForm();
@@ -66,27 +71,36 @@ export class StreamCreateComponent implements OnInit {
     return this.streamCreateForm.controls;
   }
 
-
+  readJrssDocId(){
+    for (var jrss of this.JRSS){
+      if(jrss.jrss == this.streamCreateForm.value.JRSS){
+        this.jrssDocId = jrss._id;
+        this.currentJrssArray = jrss;
+        for(var techStream of this.currentJrssArray.technologyStream){
+          if(techStream.value.toLowerCase() == this.streamCreateForm.value.technologyStream.toLowerCase()){
+            this.duplicateTechStream = true;
+          }
+        }
+        
+      }
+    }
+  }
 
   onSubmit() {
     this.submitted = true;
+    this.readJrssDocId();
     if (!this.streamCreateForm.valid) {
       return false;
-    } else {
-
-
-
-
-      this.optionsArray=[];
-      //alert('JRSS value==  '+this.JRSS);
-      //alert('JRSS value==  '+this.streamCreateForm.value.selecctedJrssId);
-      this.optionsArray.push({key:this.streamCreateForm.value.technologyStream,value:this.streamCreateForm.controls.technologyStream});
-      this.streamCreateForm.value.technologyStream = this.optionsArray;
-
-      //this.streamCreateForm.value.technologyStream.push(this.optionsArray);
-      //this.streamCreateForm.value.JRSS = this.JRSS;
-      this.apiService.updateTechStream('5ebae233bc98d83f8829fcef',this.JRSS).subscribe(res => {
+    } else if(this.duplicateTechStream){
+      this.error = 'This entry is already existing';
+    }else{
+      //alert('this.currentJrssArray==='+this.currentJrssArray.technologyStream[0].key);
+      this.currentJrssArray.technologyStream.push({key:this.streamCreateForm.value.technologyStream, value:this.streamCreateForm.value.technologyStream});
+      this.apiService.updateTechStream(this.jrssDocId, JSON.stringify(this.currentJrssArray)).subscribe(res => {
         console.log('Technology stream updated successfully!');
+        alert('Technology Stream added successfully');
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+             this.router.navigate(['/stream-create']));
         }, (error) => {
         console.log(error);
         })
