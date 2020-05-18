@@ -20,7 +20,7 @@
           <label for="inputJRSS3" class="col-sm-4 col-form-label">JRSS</label>
           <div class="col-sm-8">
             <select class="custom-select form-control" (change)="updateJRSSProfile($event.target.value)"
-                    formControlName="JRSS" id="inputJRSS3" [ngClass]="{ 'is-invalid': submitted && myForm.JRSS.errors }">
+                    formControlName="jrss" id="inputJRSS3" [ngClass]="{ 'is-invalid': submitted && myForm.JRSS.errors }">
               <option value="">Choose...</option>
               <option *ngFor="let jrss of JRSS" value="{{jrss.jrss}}">{{jrss.jrss}}
               </option>
@@ -56,11 +56,11 @@
     <div class="row justify-content-center">
       <label for="inputTechnologyStream" class="col-sm-4 col-form-label">Upload Bulk Questions File</label>
       <div class="col-sm-8">
-        <input type="file" (change)="addfile($event)" [(ngModel)]="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" size="50">
+        <input type="file" id="fileName" (change)="addfile($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" size="50">
       </div>
       <div class="row justify-content-center" >
         <button type="button" (click)="bulkUploadFile()">Upload File</button> &nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="button">Reset</button>
+        <button type="button" (click)="resetForm()">Reset</button>
       </div>
     </div>
     <br>

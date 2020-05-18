@@ -6,7 +6,6 @@ import { Question } from 'src/app/model/Questions';
 import { ResourceLoader, ThrowStmt } from '@angular/compiler';
 import * as XLSX from 'xlsx';
 
-
 @Component({
   selector: 'app-questions-add-bulk',
   templateUrl: './questions-add-bulk.component.html',
@@ -16,7 +15,6 @@ export class QuestionsAddBulkComponent implements OnInit {
   submitted = false;
   formReset = false;
   questionForm: FormGroup;
-  uploadFile: String = "Please select a file";
   userName: String = "admin";
   JRSS:any = [];
   technologyStream:any = [];
@@ -24,9 +22,7 @@ export class QuestionsAddBulkComponent implements OnInit {
   answerArray:Array<String>=[];
   optionsArray:Array<Object>=[];
   questionID:any;
-  validJRSS:any;
   validQuestionType:any;
-  validTechStream:any;
   bulkUploadQuestions:number=0;
   totalBulkQuestions:number=0;
   file: File;
@@ -94,7 +90,7 @@ export class QuestionsAddBulkComponent implements OnInit {
 
   // Choose Technology Stream with select dropdown
       updateTechnologyStream(e){
-        this.questionForm.get('TechnologyStream').setValue(e, {
+        this.questionForm.get('technologyStream').setValue(e, {
         onlySelf: true
         })
       }
@@ -121,7 +117,13 @@ export class QuestionsAddBulkComponent implements OnInit {
   }
   bulkUploadFile()
   { 
-  let fileReader = new FileReader();    
+  let fileReader = new FileReader();  
+  this.bulkUploadQuestions=0;
+  if(!(this.file))
+  {
+    window.alert("Please select a file")
+    return false;
+  }
   if(this.file.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   {
     window.alert("Please upload an .XLSX file")
@@ -139,7 +141,6 @@ export class QuestionsAddBulkComponent implements OnInit {
       var worksheet = workbook.Sheets[first_sheet_name];      
       let jsonQuestionObj = XLSX.utils.sheet_to_json(worksheet);
       this.totalBulkQuestions=jsonQuestionObj.length;
-      console.log("Number of Questions in uploaded file "+jsonQuestionObj.length);  
       //Check if File uploaded is Empty
       if ( jsonQuestionObj.length == 0 ) {
         window.alert("The upload file is empty. Please check the file");
@@ -150,36 +151,8 @@ export class QuestionsAddBulkComponent implements OnInit {
       {
       this.answerArray=[];  
       this.optionsArray=[];   
-      this.validJRSS=false;
       this.validQuestionType=false;
-      this.validTechStream=false;
-            
-      //Check if JRSS in sheet is Valid
-      for(var j = 0; j<this.JRSS.length; j++){
-        if(jsonQuestionObj[i]["JRSS"] == this.JRSS[j]["jrss"]){
-          this.questionForm.value.jrss = jsonQuestionObj[i]["JRSS"];
-          this.validJRSS = true;
-          //Check if Technology Stream is Valid
-          for(var k = 0; k<this.JRSS[j]["technologyStream"].length; k++)
-          {
-            if(jsonQuestionObj[i]["Technology Stream"] == this.JRSS[j]["technologyStream"][k].value){
-              this.questionForm.value.technologyStream = jsonQuestionObj[i]["Technology Stream"];
-              this.validTechStream= true;
-            }
-          }         
-        }
-      }
-      if(!this.validJRSS)
-      {
-        console.log("Not a valid JRSS "+jsonQuestionObj[i]["JRSS"]+" in row "+(i+2));
-        continue;
-      }
-      if(!this.validTechStream)
-      {
-        console.log("Not a valid Technology Stream "+jsonQuestionObj[i]["Technology Stream"]+" in row "+(i+2));
-        continue;
-      }
-
+      
       //Check if Question is entered and update in the Question Form
       if(!(jsonQuestionObj[i]["Question"])){
         console.log("The question is not found in row number "+(i+2));
@@ -242,8 +215,14 @@ export class QuestionsAddBulkComponent implements OnInit {
       }, (error) => {
         console.log(error);
       });
-     }  
+     }
     }  
+  }
+  resetForm()
+  {
+    this.bulkUploadQuestions = 0;
+    this.totalBulkQuestions = 0;
+    (<HTMLInputElement>document.getElementById('fileName')).value = "";
   }
 }
 
