@@ -17,9 +17,10 @@ quizRoute.route('/createQuiz').post((req, res, next) => {
 });
 
 // Get different set of questions based on the username supplied
-quizRoute.route('/:noOfQuestions/:userName/:jrss').get((req, res) => {
+quizRoute.route('/:noOfQuestions/:userName/:jrss/:technologyStream').get((req, res) => {
+  var techStreamArray = req.params.technologyStream.split(',');
   QuestionBank.aggregate( 
- [{$match : { jrss:req.params.jrss}},
+ [{$match : { jrss:req.params.jrss, technologyStream: {$in:techStreamArray}}},
   {$lookup: 
     {   from: "userAnswer",
      let: {  qb_qid: "$questionID"},

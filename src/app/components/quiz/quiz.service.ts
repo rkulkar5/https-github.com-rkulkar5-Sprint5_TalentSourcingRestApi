@@ -17,8 +17,8 @@ export class QuizService {
  constructor(private http: HttpClient) { }
 
   // Get all questions
-  getQuizQuestions(noOfQuestions,userName,jrss) {    
-    let url = `${this.baseUri}/${noOfQuestions}/${userName}/${jrss}`;
+  getQuizQuestions(noOfQuestions,userName,jrss,technologyStream) {
+    let url = `${this.baseUri}/${noOfQuestions}/${userName}/${jrss}/${technologyStream}`;
     return this.http.get(url, {headers: this.headers}).pipe(
       map((res: Response) => {
       return res || {}

@@ -31,6 +31,7 @@ export class QuizComponent implements OnInit {
 	disableBackButton:boolean=false;
   disableNextButton:boolean=true;
   jrss:any;
+  technologyStream:any;
 
   timer: any = null;
   startTime: Date;
@@ -134,11 +135,12 @@ ngOnInit() {
     this.apiService.getCandidateJrss(this.userName).subscribe(
     (res) => {      
       this.jrss=res['JRSS'];
+      this.technologyStream=res['technologyStream'];
       this.testconfigService.findTestConfigByJRSS(this.jrss).subscribe(
          (data) => {
          this.noOfQuestions = data['noOfQuestions'];
          this.configDuration = data['testDuration']*60;
-         this.quizService.getQuizQuestions(this.noOfQuestions, this.userName,this.jrss).subscribe(res => {
+         this.quizService.getQuizQuestions(this.noOfQuestions, this.userName,this.jrss,this.technologyStream).subscribe(res => {
                  this.questions = res;
          }, (error) => {
          console.log(error);
