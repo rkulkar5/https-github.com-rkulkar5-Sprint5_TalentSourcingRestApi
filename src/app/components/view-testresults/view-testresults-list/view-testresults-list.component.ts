@@ -29,7 +29,6 @@ export class ViewTestresultsListComponent implements OnChanges {
   quizNumber = 1;
   status = "";
   userName = "";
-  mode = 'viewResult';
   constructor(private ref: ChangeDetectorRef, private http: HttpClient, private route: ActivatedRoute, private router: Router, private apiService: ApiService) {
     this.config = {
       currentPage: 1,
@@ -54,9 +53,7 @@ export class ViewTestresultsListComponent implements OnChanges {
     const keys = Object.keys(filters);
 
     const filterUser = user => {
-
       let result = keys.map(key => {
-
         if (key == "employeeName" || key == "JRSS") {
           if (user.result_users[0][key]) {
             return String(user.result_users[0][key]).toLowerCase().startsWith(String(filters[key]).toLowerCase())
@@ -83,16 +80,6 @@ export class ViewTestresultsListComponent implements OnChanges {
     this.router.navigate(['/view-testresults'], { queryParams: { page: newPage } });
   }
 
-
-  onSearch(candiateName: string, email: string, jrss: string) {
-    this.apiService.getResultsSearch(candiateName + "," + email + "," + jrss).subscribe(
-      (data) => {
-        this.mode = 'onSearch';
-        this.Result = data;
-
-      })
-
-  }
   // Get all results
   getResults(): Observable<any> {
     return this.http.get(`${this.userResultUri}/getresult`);

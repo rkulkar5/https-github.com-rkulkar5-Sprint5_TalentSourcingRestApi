@@ -33,8 +33,7 @@ JRSS: new FormControl('')
 }
 
 
- search(filters: any): void {
-   console.log('here in search if search component')
+ search(filters: any): void {   
 Object.keys(filters).forEach(key => filters[key] === '' ? delete filters[key] : key);
 this.groupFilters.emit(filters);
 }
