@@ -14,9 +14,9 @@
       </tr>
       </thead>
       <tbody>
-       <tr *ngFor="let result of Result | filter: searchByKeyword: 'name'">
-         <td>1</td>
-        <!-- <td *ngIf="result.result_users.length > 0">{{this.config.itemsPerPage *(this.config.currentPage-1)+i+1}}</td>  -->
+       <tr *ngFor="let result of Result | filter: searchByKeyword: 'name' | paginate: config; let i = index">
+         
+         <td *ngIf="result.result_users.length > 0">{{this.config.itemsPerPage *(this.config.currentPage-1)+i+1}}</td>  
         <td *ngIf="result.result_users.length > 0">{{result.result_users[0].employeeName}}</td>      
         <td *ngIf="result.result_users.length  > 0">{{result.userName}}</td>
           <td *ngIf="result.result_users.length  > 0"></td>
@@ -26,5 +26,5 @@
         </tr>
         </tbody>
       </table>
-      <!-- <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls> -->
+       <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls> 
   </div>

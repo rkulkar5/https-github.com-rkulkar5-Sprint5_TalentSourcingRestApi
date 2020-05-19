@@ -6,10 +6,11 @@ import { SearchComponent } from '../search/search.component';
 import { FilterPipe } from '../../filter.pipe';
 import { UserRoutes } from './user-routing.module';
 import { ApiService } from './../../service/api.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ViewTestresultsListComponent } from './view-testresults-list/view-testresults-list.component';
 
 @NgModule({
-  imports:      [ CommonModule, FormsModule, ReactiveFormsModule, UserRoutes ],
+  imports:      [ CommonModule, FormsModule, ReactiveFormsModule, UserRoutes,NgxPaginationModule ],
   declarations: [ ViewTestresultsComponent, SearchComponent,  FilterPipe, ViewTestresultsListComponent ],
   providers: [ ApiService ]
 })
