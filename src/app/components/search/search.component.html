@@ -1,0 +1,16 @@
+<form novalidate
+[formGroup]="form">
+<div>
+  <br>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        
+  <input type="search" #candiateName formControlName="employeeName" placeholder="Search using Candidate Names" id="search4" aria-label="Search" ></div>
+  <div class="col-sm-3">
+  <input type="search" #emailID formControlName="userName" placeholder="Search using emailID" id="search4" aria-label="Search" mdbInput></div>
+  <div class="col-sm-3">
+  <input type="search" #jrss formControlName="JRSS" placeholder="Search using JRSS" id="search4" aria-label="Search" mdbInput></div>
+  
+<button class="btn btn-primary float-right"
+(click)="search(form.value)">Search</button>
+    </div>

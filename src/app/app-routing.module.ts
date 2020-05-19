@@ -23,6 +23,7 @@ import { StreamCreateComponent } from './components/stream-create/stream-create.
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login-component' },
+  { path: '', loadChildren: './components/view-testresults/user.module#UserModule'},
   { path: 'create-band', component: BandCreateComponent },
   { path: 'take-quiz', component: QuizComponent },
   { path: 'result-page', component: ResultPageComponent },

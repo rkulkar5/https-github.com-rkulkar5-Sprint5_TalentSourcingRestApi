@@ -1,0 +1,30 @@
+<div class="container" *ngIf="mode=='viewResult'">
+    <!-- No data message --> 
+    <!-- Candidate list -->
+    <table class="table table-bordered" *ngIf="Result.length > 0">
+      <thead class="table-success">
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Candidate Name</th>
+        <th scope="col">Email ID</th>
+        <th scope="col">Employee No.</th>
+        <th scope="col">JRSS</th>
+        <th scope="col">Attempt No</th>
+        <th scope="col">Result</th>
+      </tr>
+      </thead>
+      <tbody>
+       <tr *ngFor="let result of Result | filter: searchByKeyword: 'name'">
+         <td>1</td>
+        <!-- <td *ngIf="result.result_users.length > 0">{{this.config.itemsPerPage *(this.config.currentPage-1)+i+1}}</td>  -->
+        <td *ngIf="result.result_users.length > 0">{{result.result_users[0].employeeName}}</td>      
+        <td *ngIf="result.result_users.length  > 0">{{result.userName}}</td>
+          <td *ngIf="result.result_users.length  > 0"></td>
+          <td *ngIf="result.result_users.length  > 0">{{result.result_users[0].JRSS}}</td>
+          <td *ngIf="result.result_users.length  > 0">{{result.quizNumber}}</td>
+          <td *ngIf="result.result_users.length  > 0">{{result.userScore}}%</td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- <pagination-controls (pageChange)="pageChange($event)" class="my-pagination"></pagination-controls> -->
+  </div>

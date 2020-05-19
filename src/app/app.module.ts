@@ -25,8 +25,9 @@ import { QuestionsAddBulkComponent } from './components/question-add-bulk/questi
 import { TestConfigAddComponent } from './components/test-config-add/test-config-add.component';
 import { TestConfigEditComponent } from './components/test-config-edit/test-config-edit.component';
 import { JrssCreateComponent } from './components/jrss-create/jrss-create.component';
-import { ViewTestresultsComponent } from './components/view-testresults/view-testresults.component';
-import { StreamCreateComponent } from './components/stream-create/stream-create.component'
+import { StreamCreateComponent } from './components/stream-create/stream-create.component';
+import {UserModule} from './components/view-testresults/user.module';
+
 export let browserRefresh = false;
 
 @NgModule({
@@ -48,9 +49,7 @@ export let browserRefresh = false;
     TestConfigAddComponent,
     TestConfigEditComponent,
     JrssCreateComponent,
-    ViewTestresultsComponent,
-    StreamCreateComponent
-    ],
+    StreamCreateComponent],
   imports: [
     BrowserModule,
     NgxPaginationModule,
@@ -58,6 +57,8 @@ export let browserRefresh = false;
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    UserModule,
+    [ NgxPaginationModule ],
     BackButtonDisableModule.forRoot({
       preserveScrollPosition: true
     })
