@@ -168,8 +168,12 @@ export class QuestionsAddBulkComponent implements OnInit {
       let jsonQuestionObj = XLSX.utils.sheet_to_json(worksheet);
       this.totalBulkQuestions=jsonQuestionObj.length;
       console.log("File length: "+jsonQuestionObj.length);
-      //Check if File uploaded is Empty
-      if ( jsonQuestionObj.length == 1 ) {
+      //Check if first row in file is empty.
+      let firstRowEmpty = ((!(jsonQuestionObj[0]["QuestionType"])) && (!(jsonQuestionObj[0]["Question"])) && (!(jsonQuestionObj[0]["Option1"])) && (!(jsonQuestionObj[0]["Option2"])) && (!(jsonQuestionObj[0]["Option3"])) && (!(jsonQuestionObj[0]["Option4"])) 
+      && (!(jsonQuestionObj[0]["AnswerID"])));
+      console.log("First Row Empty: "+firstRowEmpty);
+      //Check if File uploaded is Empty      
+      if ( jsonQuestionObj.length == 1 && firstRowEmpty ) {
         window.alert("The upload file is empty. Please check the file");
         return false;
        }
