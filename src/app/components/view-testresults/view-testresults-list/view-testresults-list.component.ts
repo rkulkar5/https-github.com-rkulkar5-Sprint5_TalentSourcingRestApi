@@ -43,6 +43,7 @@ export class ViewTestresultsListComponent implements OnChanges {
   ngOnChanges(): void {
 
     if (this.groupFilters) this.filterUserList(this.groupFilters, this.users);
+    this.router.navigate(['/view-testresults'])
   }
   ngOnInit(): void {
     this.readResult();
