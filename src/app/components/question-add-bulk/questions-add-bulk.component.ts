@@ -2,9 +2,8 @@ import { Router } from '@angular/router';
 import { ApiService } from './../../service/api.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Question } from 'src/app/model/Questions';
-import { ResourceLoader, ThrowStmt } from '@angular/compiler';
 import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-questions-add-bulk',
@@ -109,17 +108,44 @@ export class QuestionsAddBulkComponent implements OnInit {
       onlySelf: true
       })
     }
+    bulkUploadTemplate(){
+      let templateFileName= "Bulk_Upload_Template.xlsx";
+      let templateExcel: any = [{
+        QuestionType: '',
+        Question: '',
+        Option1: '',
+        Option2: '',
+        Option3: '', 
+        Option4: '',
+        AnswerID: ''
+        }]
+
+      const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(templateExcel);
+
+      // generate workbook and add the worksheet
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       //save to file
+       XLSX.writeFile(wb, templateFileName);
+    }
   addfile(event)     
-  {    
+  {
   this.file= event.target.files[0]; 
   this.bulkUploadQuestions=0;
   this.totalBulkQuestions=0;
   }
   bulkUploadFile()
   { 
+    this.submitted = true;
+    this.formReset = false;
+  if (!this.questionForm.value.jrss || !this.questionForm.value.technologyStream)
+  {
+     return false;
+  }       
   let fileReader = new FileReader();  
   this.bulkUploadQuestions=0;
-  if(!(this.file))
+  if( (!(this.file)))
   {
     window.alert("Please select a file")
     return false;
@@ -141,8 +167,9 @@ export class QuestionsAddBulkComponent implements OnInit {
       var worksheet = workbook.Sheets[first_sheet_name];      
       let jsonQuestionObj = XLSX.utils.sheet_to_json(worksheet);
       this.totalBulkQuestions=jsonQuestionObj.length;
+      console.log("File length: "+jsonQuestionObj.length);
       //Check if File uploaded is Empty
-      if ( jsonQuestionObj.length == 0 ) {
+      if ( jsonQuestionObj.length == 1 ) {
         window.alert("The upload file is empty. Please check the file");
         return false;
        }
@@ -161,22 +188,22 @@ export class QuestionsAddBulkComponent implements OnInit {
       this.questionForm.value.question=jsonQuestionObj[i]["Question"];
           
       //Check if All 4 options  are present
-      if(!(jsonQuestionObj[i]["Option 1"] && jsonQuestionObj[i]["Option 2"] && jsonQuestionObj[i]["Option 3"] && jsonQuestionObj[i]["Option 4"])){
+      if(!(jsonQuestionObj[i]["Option1"] && jsonQuestionObj[i]["Option2"] && jsonQuestionObj[i]["Option3"] && jsonQuestionObj[i]["Option4"])){
               console.log("All the 4 options should be entered");
               continue;
       }
-      this.optionsArray.push({optionID:1,option:jsonQuestionObj[i]["Option 1"]},
-      {optionID:2,option:jsonQuestionObj[i]["Option 2"]},
-      {optionID:3,option:jsonQuestionObj[i]["Option 3"]},
-      {optionID:4,option:jsonQuestionObj[i]["Option 4"]});         
+      this.optionsArray.push({optionID:1,option:jsonQuestionObj[i]["Option1"]},
+      {optionID:2,option:jsonQuestionObj[i]["Option2"]},
+      {optionID:3,option:jsonQuestionObj[i]["Option3"]},
+      {optionID:4,option:jsonQuestionObj[i]["Option4"]});         
       this.questionForm.value.options=this.optionsArray;
 
       //Check if Answer ID is updated
-      if(!(jsonQuestionObj[i]["Answer ID"])){  
+      if(!(jsonQuestionObj[i]["AnswerID"])){  
           console.log("Answer ID is not populated on row "+(i+2));
           continue;
       }   
-      this.questionForm.value.answerID=jsonQuestionObj[i]["Answer ID"];
+      this.questionForm.value.answerID=jsonQuestionObj[i]["AnswerID"];
             
       //Check Valid QuestionType And update
       for(var j = 0; j<this.QuestionTypes.length; j++){
@@ -211,6 +238,7 @@ export class QuestionsAddBulkComponent implements OnInit {
       (res) => {
         this.bulkUploadQuestions=this.bulkUploadQuestions + 1;
         console.log("Number of Questions uploaded "+this.bulkUploadQuestions);
+        this.formReset = true;
         this.questionForm.reset();
       }, (error) => {
         console.log(error);
@@ -222,6 +250,9 @@ export class QuestionsAddBulkComponent implements OnInit {
   {
     this.bulkUploadQuestions = 0;
     this.totalBulkQuestions = 0;
+    this.formReset = true;
+    this.questionForm.reset();
+    this.file = null;
     (<HTMLInputElement>document.getElementById('fileName')).value = "";
   }
 }
