@@ -38,6 +38,18 @@ getJRSS() {
         catchError(this.errorMgmt)
       )
   }
+
+  // GET Candidate details by username
+  getCandidateDetails(username): Observable<any> {
+      let url = `${this.baseUri}/readCandidate/${username}`;
+      return this.http.get(url, {headers: this.headers}).pipe(
+            map((res: Response) => {
+              return res || {}
+            }),
+            catchError(this.errorMgmt)
+      )
+  }
+
   // Create Question
   createQuestion(data): Observable<any> {
     console.log('create question apiservice');

@@ -29,6 +29,8 @@ export class ViewTestresultsListComponent implements OnChanges {
   quizNumber = 1;
   status = "";
   userName = "";
+  candidateDetails: any = [];
+  mode: any;
   constructor(private ref: ChangeDetectorRef, private http: HttpClient, private route: ActivatedRoute, private router: Router, private apiService: ApiService) {
     this.config = {
       currentPage: 1,
@@ -94,4 +96,13 @@ export class ViewTestresultsListComponent implements OnChanges {
       this.filteredUsers = this.filteredUsers.length > 0 ? this.filteredUsers : this.users;
     })
   }
+
+  //To read candidate details
+  getCandidateDetails(username) {
+      this.mode="displayModalBody";
+      this.apiService.getCandidateDetails(username).subscribe((data) => {
+             this.candidateDetails = data;
+      })
+  }
+
 }

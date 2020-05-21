@@ -30,7 +30,32 @@ candidateRoute.route('/candidatejrss/:email').get((req, res, next) => {
     }
   })
 });
-candidateRoute.route('/createquestion').post((req, res, next) => {  
+
+  // Get candidate by username
+candidateRoute.route('/readCandidate/:username').get((req, res) => {
+     Candidate.aggregate([
+      {$match : { username:req.params.username }},
+      {$lookup:
+    		{   from: "users",
+                localField: "username",
+                foreignField: "username",
+                as: "candidate_users"
+        }
+      },
+      {$sort:
+        {
+          'updatedDate': -1
+        }
+      }],(error,output) => {
+        if (error) {
+          return next(error)
+        } else {
+          res.json(output)
+        }
+      })
+  });
+
+candidateRoute.route('/createquestion').post((req, res, next) => {
   QuestionBank.create(req.body, (error, data) => {
     if (error) {
       return next(error)
