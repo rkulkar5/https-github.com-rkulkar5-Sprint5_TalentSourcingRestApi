@@ -1,20 +1,47 @@
-<nav class="nav nav-pills flex-column flex-sm-row">
-  <a class="flex-sm-fill text-sm-center nav-link" routerLink="/candidates-list" [state]="{username:this.userName}" routerLinkActive="active">Manage Candidates</a>
-  <a class="flex-sm-fill text-sm-center nav-link" routerLink="/manage-questionbank"routerLinkActive="active">Manage Question Bank</a>
-  <a class="flex-sm-fill text-sm-center nav-link" routerLink="/testconfig-add" routerLinkActive="active">Manage Metadata</a>
-  <a class="flex-sm-fill text-sm-center nav-link" routerLink="/view-testresults"routerLinkActive="active">View Test Results</a>
-  <a class="flex-sm-fill text-sm-center nav-link" routerLink="/login-component" routerLinkActive="active">Logout</a>
+<nav class="navbar navbar-expand-lg navbar-light table-success">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link dropdown-toggle" routerLink="/candidates-list" [state]="{username:this.userName}" routerLinkActive="active" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage Candidate
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/create-candidate" [state]="{username:this.userName}" routerLinkActive="active">Add Candidate</a>
+          <a class="dropdown-item" routerLink="/candidates-list" [state]="{username:this.userName}" routerLinkActive="active">View Candidate</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage Questions
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/manage-questionbank" routerLinkActive="active">Add question</a>
+          <a class="dropdown-item" routerLink="/manage-questionbank-bulk" routerLinkActive="active">Add Bulk Question</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage Metadata<span class="sr-only">(current)</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/jrss-create" routerLinkActive="active">Add JRSS</a>
+          <a class="dropdown-item" routerLink="/stream-create" routerLinkActive="active">Add Technology Stream</a>
+          <a class="dropdown-item" routerLink="/testconfig-add" routerLinkActive="active">Add Test Configuration</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/view-testresults"routerLinkActive="active">View TestResults</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login-component" routerLinkActive="active">Logout</a>
+      </li>
+    </ul>
+  </div>
 </nav>
-<br><br>
-<div class="float-right text-center">
-  <a routerLink="/jrss-create" routerLinkActive="active">JRSS</a> &nbsp;&nbsp;
-  <a routerLink="/stream-create" routerLinkActive="active">Stream</a>  &nbsp;&nbsp;
-  <a routerLink="/testconfig-add" routerLinkActive="active">TestConfig</a>
-</div>
-<br><br>
+<br/>
 <div class="row justify-content-center">
   <div class="col-md-8 register-employee">
-    <h4 class="my-0 mr-md-auto font-weight-normal">Create Test Config</h4>
+    <h4 class="my-0 mr-md-auto font-weight-normal">Add Test Configuration</h4>
     <br/>
     <!-- form Test Config -->
     <div class="card-body">
