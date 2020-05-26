@@ -26,6 +26,7 @@ export class CandidateEditComponent implements OnInit {
   currDate: Date ;
   technologyStream:any= [];
   skillArray:any= []; 
+  stream:any=[];
 
   constructor(
     public fb: FormBuilder,
@@ -124,10 +125,16 @@ export class CandidateEditComponent implements OnInit {
       });
 
       // Get technologyStream from JRSS
+      this.stream = this.editForm.value.technologyStream.split(",");
       for (var jrss of this.JRSS){
         if(jrss.jrss == this.editForm.value.JRSS){
           this.technologyStream = [];
           for (var skill of jrss.technologyStream){
+            for(var streamValue of this.stream) { 
+              if(skill.value == streamValue){
+                skill.isSelected = "selected";
+              }
+            }
             this.technologyStream.push(skill);
           }
         }
@@ -180,15 +187,9 @@ export class CandidateEditComponent implements OnInit {
        
     // Technology Stream
     if( typeof(this.editForm.value.technologyStream) == 'object' )  
-    {      
-    this.skillArray = [];
-    for (var stream of this.editForm.value.technologyStream)  {        
-      if(this.skillArray.indexOf(stream.value == -1)){
-          this.skillArray.push(stream.value);  
-      }     
+    { 
+     this.editForm.value.technologyStream = this.editForm.value.technologyStream.join(',');
     }
-    this.editForm.value.technologyStream = this.skillArray.join(','); 
-  }
     let updatedCandidate = new Candidate(this.editForm.value.employeeName,
       this.editForm.value.email,
       this.editForm.value.band,
