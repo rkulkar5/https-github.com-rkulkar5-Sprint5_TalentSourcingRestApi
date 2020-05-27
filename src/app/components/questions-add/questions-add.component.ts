@@ -48,8 +48,8 @@ export class QuestionsAddComponent implements OnInit {
         question: ['', [Validators.required]],
         option1: ['', [Validators.required]],
         option2: ['', [Validators.required]],
-        option3: ['', [Validators.required]],
-        option4: ['', [Validators.required]],
+        option3: [],
+        option4: [],
         option1checkbox:[],
         option2checkbox:[],
         option3checkbox:[],
@@ -123,6 +123,16 @@ export class QuestionsAddComponent implements OnInit {
           if(!(this.questionForm.value.option1checkbox || this.questionForm.value.option2checkbox
             || this.questionForm.value.option3checkbox || this.questionForm.value.option4checkbox)){
               alert("Answers not selected");
+            } else if(!(this.questionForm.value.option4 || this.questionForm.value.option3)
+            &&(this.questionForm.value.option4checkbox || this.questionForm.value.option3checkbox)){
+              console.log('else if only 2 options');
+              alert("You can't select answers where options are empty   ");
+            }else if(!(this.questionForm.value.option4)
+            &&(this.questionForm.value.option4checkbox)){
+              console.log('else if only 3 options');
+              alert("You can't select answers where options are empty   ");
+            }else if(!(this.questionForm.value.option3) && (this.questionForm.value.option4)){
+              alert("You can't fill option4 leaving option3 empty");
             }else{  
           if(this.questionForm.value.option1checkbox){
             this.answerArray.push("1");}
@@ -133,10 +143,20 @@ export class QuestionsAddComponent implements OnInit {
               if(this.questionForm.value.option4checkbox){
                 this.answerArray.push("4");}                
                 this.questionForm.value.answerID=this.answerArray.toString();
-               this.optionsArray.push({optionID:1,option:this.questionForm.value.option1},
+                if(!(this.questionForm.value.option4) && !(this.questionForm.value.option3)){
+                  this.optionsArray.push({optionID:1,option:this.questionForm.value.option1},
+                    {optionID:2,option:this.questionForm.value.option2});      
+                }
+             else if(!this.questionForm.value.option4){
+                  this.optionsArray.push({optionID:1,option:this.questionForm.value.option1},
+                    {optionID:2,option:this.questionForm.value.option2},
+                    {optionID:3,option:this.questionForm.value.option3});      
+                }
+               else{this.optionsArray.push({optionID:1,option:this.questionForm.value.option1},
                 {optionID:2,option:this.questionForm.value.option2},
                 {optionID:3,option:this.questionForm.value.option3},
-                {optionID:4,option:this.questionForm.value.option4});         
+                {optionID:4,option:this.questionForm.value.option4}); 
+               }        
               this.questionForm.value.options=this.optionsArray;
                 //Validation for singleSelect
                 if((this.questionForm.value.questionType=="SingleSelect")&& (this.answerArray.toString().length)>1)
