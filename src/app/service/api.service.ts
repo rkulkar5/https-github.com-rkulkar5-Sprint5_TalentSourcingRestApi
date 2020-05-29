@@ -65,7 +65,7 @@ getJRSS() {
       console.log('get question ID apiservice');
       let url = `${this.baseUri}/getMaxQuestionID`;
       return this.http.get(url, {headers: this.headers}).pipe(
-        map((res: Response) => {    
+        map((res: Response) => {
           return res || {}
         }),
         catchError(this.errorMgmt)
@@ -90,7 +90,7 @@ getJRSS() {
       .pipe(
         catchError(this.errorMgmt)
       )
-     
+
   }
 
   // Get all candidates
@@ -158,7 +158,7 @@ getJRSS() {
 getUserByUserName(id): Observable<any> {
   let url = `${this.baseloginUri}/getUser/${id}`;
   return this.http.get(url, {headers: this.headers}).pipe(
-    map((res: Response) => {    
+    map((res: Response) => {
       return res || {}
     }),
     catchError(this.errorMgmt)
@@ -166,21 +166,21 @@ getUserByUserName(id): Observable<any> {
   }
 
   // Update Users table status,quizNumber,UpdatedBy and UpdatedDate columns based on candidate table username
-  updateUsersStatusAndQuizNum(id,quiznum,status,uname): Observable<any> {    
-    let url = `${this.baseloginUri}/updateUserStatusAndQuizNum/${id}/${quiznum}/${status}/${uname}`;  
+  updateUsersStatusAndQuizNum(id,quiznum,status,uname): Observable<any> {
+    let url = `${this.baseloginUri}/updateUserStatusAndQuizNum/${id}/${quiznum}/${status}/${uname}`;
     return this.http.put(url, { headers: this.headers }).pipe(
     catchError(this.errorMgmt)
     )
   }
 
 // Update Users table status,UpdatedBy and UpdatedDate columns based on candidate table username
-  updateUsersStatus(id,status,uname): Observable<any> {  
-    let url = `${this.baseloginUri}/updateUserStatus/${id}/${status}/${uname}`;    
+  updateUsersStatus(id,status,uname): Observable<any> {
+    let url = `${this.baseloginUri}/updateUserStatus/${id}/${status}/${uname}`;
     return this.http.put(url, { headers: this.headers }).pipe(
     catchError(this.errorMgmt)
     )
   }
-  
+
  // Update password
  updatepassword(id, pwd): Observable<any> {
      let url = `${this.baseloginUri}/updatepassword/${id}/${pwd}`;
@@ -320,5 +320,24 @@ deleteJrss(id): Observable<any> {
     catchError(this.errorMgmt)
   )
 }
+
+/**
+ *
+ * getCandidateAssessmentDetails
+ * @param username
+ * @author A.George
+ * 29May2020
+ *
+ */
+getCandidateAssessmentDetails(username): Observable<any> {
+  let url = `${this.userResultUri}/quizDetailsByUser/${username}`;
+  return this.http.get(url, {headers: this.headers}).pipe(
+        map((res: Response) => {
+          return res || {}
+        }),
+        catchError(this.errorMgmt)
+  )
+}
+
 
 }
